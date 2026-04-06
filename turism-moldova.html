@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Turism Moldova – Mini-Ghid</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --wine: #7a1f2e;
+      --wine-light: #a33345;
+      --gold: #c9a84c;
+      --cream: #faf6ef;
+      --text: #2c2018;
+      --muted: #7a6a58;
+      --border: #e2d9cc;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      font-weight: 300;
+      background: var(--cream);
+      color: var(--text);
+      line-height: 1.75;
+    }
+
+    /* ── FADE-IN ANIMATIONS ── */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--wine);
+      color: white;
+      text-align: center;
+      padding: 3.5rem 1.5rem 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+    header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      position: relative;
+    }
+    header p {
+      margin-top: 0.75rem;
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.8);
+      font-style: italic;
+      position: relative;
+    }
+
+    /* ── CONTAINER ── */
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 1.5rem 4rem;
+    }
+    hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+
+    /* ── NAV ── */
+    nav {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.5rem 2rem;
+      margin: 2.5rem 0;
+    }
+    nav h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+    nav ul { list-style: none; display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; }
+    nav a { color: var(--wine); text-decoration: none; font-weight: 400; font-size: 0.95rem; transition: color 0.2s; }
+    nav a:hover { color: var(--gold); }
+
+    /* ── SECTIONS ── */
+    section { margin-bottom: 2rem; }
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      color: var(--wine);
+      margin: 2.5rem 0 1.25rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--gold);
+      display: inline-block;
+    }
+    h3 { font-family: 'Playfair Display', serif; font-size: 1.25rem; color: var(--text); margin: 1.75rem 0 0.4rem; }
+    .badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--muted);
+      background: var(--border);
+      padding: 2px 8px;
+      border-radius: 20px;
+      margin-bottom: 0.5rem;
+    }
+    p { margin-bottom: 0.75rem; color: var(--text); }
+
+    /* ── SLIDER ── */
+    .slider-section { margin: 2rem 0; }
+    .slider-wrapper {
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: white;
+    }
+    .slider-track {
+      display: flex;
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .slide {
+      min-width: 100%;
+      padding: 2.5rem 2rem;
+      text-align: center;
+      background: white;
+    }
+    .slide-emoji { font-size: 3.5rem; margin-bottom: 0.75rem; display: block; }
+    .slide-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--wine);
+      margin-bottom: 0.5rem;
+    }
+    .slide-desc { color: var(--muted); font-size: 0.95rem; max-width: 500px; margin: 0 auto; }
+    .slider-controls {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem;
+      background: white;
+      border-top: 1px solid var(--border);
+    }
+    .slider-btn {
+      background: var(--wine);
+      color: white;
+      border: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background 0.2s, transform 0.1s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .slider-btn:hover { background: var(--wine-light); transform: scale(1.1); }
+    .slider-dots { display: flex; gap: 0.4rem; }
+    .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--border);
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .dot.active { background: var(--wine); transform: scale(1.3); }
+
+    /* ── DESTINAȚII GRID ── */
+    .dest-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1.25rem;
+      margin-top: 1.25rem;
+    }
+    .dest-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem 1.5rem;
+      transition: box-shadow 0.2s, transform 0.2s;
+      position: relative;
+      cursor: pointer;
+    }
+    .dest-card:hover { box-shadow: 0 6px 20px rgba(122,31,46,0.12); transform: translateY(-2px); }
+    .dest-card h3 { margin-top: 0; font-size: 1.1rem; }
+    .dest-card p { font-size: 0.92rem; color: var(--muted); margin: 0; }
+
+    /* ── TOOLTIP ── */
+    .tooltip-trigger { position: relative; display: inline-block; cursor: help; }
+    .tooltip-trigger::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%) scale(0.8);
+      background: var(--wine);
+      color: white;
+      padding: 0.45rem 0.85rem;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      white-space: nowrap;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s, transform 0.2s;
+      z-index: 100;
+      font-family: 'Lato', sans-serif;
+      font-weight: 400;
+    }
+    .tooltip-trigger::before {
+      content: '';
+      position: absolute;
+      bottom: calc(100% + 2px);
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: var(--wine);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s;
+      z-index: 100;
+    }
+    .tooltip-trigger:hover::after { opacity: 1; transform: translateX(-50%) scale(1); }
+    .tooltip-trigger:hover::before { opacity: 1; }
+
+    /* ── SFATURI ── */
+    ol.sfaturi { list-style: none; counter-reset: sfat; display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem; }
+    ol.sfaturi li {
+      counter-increment: sfat;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem 1.25rem 1rem 4rem;
+      position: relative;
+    }
+    ol.sfaturi li::before {
+      content: counter(sfat);
+      position: absolute; left: 1.1rem; top: 50%; transform: translateY(-50%);
+      width: 2rem; height: 2rem;
+      background: var(--wine); color: white; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 0.85rem;
+    }
+    ol.sfaturi li b { color: var(--wine); }
+
+    /* ── TABLE ── */
+    table { width: 100%; border-collapse: collapse; margin-top: 1rem; font-size: 0.95rem; }
+    thead th { background: var(--wine); color: white; padding: 0.75rem 1rem; text-align: left; font-weight: 700; letter-spacing: 0.5px; }
+    tbody tr:nth-child(odd) { background: white; }
+    tbody tr:nth-child(even) { background: #f5efe6; }
+    tbody td { padding: 0.7rem 1rem; border-bottom: 1px solid var(--border); }
+    .info-table td:first-child { font-weight: 700; color: var(--muted); width: 160px; }
+
+    /* ── VIN ── */
+    .vin-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1rem; }
+    ul.lista { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 0.4rem; }
+    ul.lista li { padding: 0.45rem 0.75rem; background: white; border: 1px solid var(--border); border-radius: 6px; font-size: 0.93rem; }
+
+    /* ── FORMULAR ── */
+    #formular { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 2rem; margin-top: 1.5rem; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.35rem; }
+    .form-group.full { grid-column: 1 / -1; }
+    label { font-size: 0.85rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+    input, select, textarea {
+      border: 1.5px solid var(--border);
+      border-radius: 6px;
+      padding: 0.6rem 0.85rem;
+      font-family: 'Lato', sans-serif;
+      font-size: 0.95rem;
+      color: var(--text);
+      background: var(--cream);
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--wine);
+      box-shadow: 0 0 0 3px rgba(122,31,46,0.1);
+    }
+    input.error, select.error, textarea.error { border-color: #c0392b; }
+    .error-msg { color: #c0392b; font-size: 0.8rem; display: none; }
+    .error-msg.show { display: block; }
+    textarea { resize: vertical; min-height: 90px; }
+    .btn-submit {
+      background: var(--wine);
+      color: white;
+      border: none;
+      padding: 0.75rem 2rem;
+      border-radius: 8px;
+      font-family: 'Lato', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      margin-top: 0.5rem;
+    }
+    .btn-submit:hover { background: var(--wine-light); transform: translateY(-1px); }
+    .btn-submit:active { transform: translateY(0); }
+    #form-success {
+      display: none;
+      background: #e8f5e9;
+      border: 1px solid #a5d6a7;
+      border-radius: 8px;
+      padding: 1.25rem 1.5rem;
+      color: #2e7d32;
+      margin-top: 1rem;
+      font-weight: 400;
+    }
+
+    /* ── BACK TO TOP ── */
+    #back-to-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--wine);
+      color: white;
+      border: none;
+      width: 46px; height: 46px;
+      border-radius: 50%;
+      font-size: 1.3rem;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s, transform 0.2s;
+      z-index: 999;
+    }
+    #back-to-top.show { opacity: 1; pointer-events: all; }
+    #back-to-top:hover { transform: translateY(-3px); }
+
+    /* ── LINKS & FOOTER ── */
+    a { color: var(--wine); }
+    a:hover { color: var(--gold); }
+    footer { text-align: center; padding: 1.5rem; font-size: 0.8rem; color: var(--muted); border-top: 1px solid var(--border); }
+
+    @media (max-width: 520px) {
+      .vin-cols, .form-grid { grid-template-columns: 1fr; }
+      .dest-grid { grid-template-columns: 1fr; }
+      .form-group.full { grid-column: 1; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>🇲🇩 Turism Moldova</h1>
+  <p>O țară mică cu suflet mare — peisaje line, mănăstiri vechi, vinuri de legendă și ospitalitate autentică.</p>
+</header>
+
+<div class="container">
+
+  <nav class="fade-in">
+    <h2>📋 Cuprins</h2>
+    <ul>
+      <li><a href="#slider">Galerie</a></li>
+      <li><a href="#destinatii">Destinații principale</a></li>
+      <li><a href="#sfaturi">Sfaturi practice</a></li>
+      <li><a href="#bucatarie">Bucătărie tradițională</a></li>
+      <li><a href="#vin">Ruta vinului</a></li>
+      <li><a href="#contact">Informații utile</a></li>
+      <li><a href="#newsletter">Newsletter</a></li>
+    </ul>
+  </nav>
+
+  <!-- ══ SLIDER ══ -->
+  <section id="slider" class="slider-section fade-in">
+    <h2>🖼️ Locuri de vizitat</h2>
+    <div class="slider-wrapper">
+      <div class="slider-track" id="sliderTrack">
+
+        <div class="slide">
+          <span class="slide-emoji">🏛️</span>
+          <div class="slide-title">Chișinău</div>
+          <div class="slide-desc">Capitala vibrantă cu bulevarde largi, parcuri verzi și o scenă culturală în plină efervescență.</div>
+        </div>
+
+        <div class="slide">
+          <span class="slide-emoji">⛰️</span>
+          <div class="slide-title">Orheiul Vechi</div>
+          <div class="slide-desc">Complex rupestru tăiat în calcar deasupra meandrelor râului Răut — istorie trăită în piatră.</div>
+        </div>
+
+        <div class="slide">
+          <span class="slide-emoji">💧</span>
+          <div class="slide-title">Saharna</div>
+          <div class="slide-desc">22 de cascade într-un defileu verde — un loc de liniște și contemplare lângă Nistru.</div>
+        </div>
+
+        <div class="slide">
+          <span class="slide-emoji">🍷</span>
+          <div class="slide-title">Cricova</div>
+          <div class="slide-desc">120 km de tuneluri subterane cu milioane de sticle de vin. O lume aparte sub pământ.</div>
+        </div>
+
+        <div class="slide">
+          <span class="slide-emoji">🌿</span>
+          <div class="slide-title">Purcari</div>
+          <div class="slide-desc">Cel mai vechi cram din Moldova (1827) pe malul Nistrului — vinul preferat al țarilor ruși.</div>
+        </div>
+
+        <div class="slide">
+          <span class="slide-emoji">🏞️</span>
+          <div class="slide-title">Țipova</div>
+          <div class="slide-desc">Cea mai înaltă cascadă din Moldova și peșteri impresionante — locul legendei lui Orfeu.</div>
+        </div>
+
+      </div>
+      <div class="slider-controls">
+        <button class="slider-btn" id="prevBtn" aria-label="Anterior">&#8592;</button>
+        <div class="slider-dots" id="sliderDots"></div>
+        <button class="slider-btn" id="nextBtn" aria-label="Următor">&#8594;</button>
+      </div>
+    </div>
+  </section>
+
+  <hr/>
+
+  <!-- ══ DESTINAȚII ══ -->
+  <section id="destinatii">
+    <h2>📍 Destinații principale</h2>
+    <div class="dest-grid">
+
+      <div class="dest-card fade-in" data-tooltip="Click pentru mai multe detalii">
+        <div class="badge">Capitală · Cultură · Viață nocturnă</div>
+        <h3>🏛️ Chișinău</h3>
+        <p>Bulevardul Ștefan cel Mare, Arcul de Triumf, piețe pitorești și o scenă culinară vibrantă.</p>
+      </div>
+
+      <div class="dest-card fade-in" data-tooltip="Complex rupestru unic în Moldova">
+        <div class="badge">Natură · Arheologie · Spirit</div>
+        <h3>⛰️ Orheiul Vechi</h3>
+        <p>Complex rupestru tăiat în calcar deasupra meandrelor râului Răut. Sat dacic și mănăstire medievală.</p>
+      </div>
+
+      <div class="dest-card fade-in" data-tooltip="22 cascade de explorat">
+        <div class="badge">Cascade · Mănăstire · Natură</div>
+        <h3>💧 Saharna</h3>
+        <p>22 de cascade într-un defileu verde, mănăstire pictată și icoana Maicii Domnului.</p>
+      </div>
+
+      <div class="dest-card fade-in" data-tooltip="Cea mai înaltă cascadă din Moldova">
+        <div class="badge">Chei · Cascadă · Legendă</div>
+        <h3>🏞️ Țipova</h3>
+        <p>Cea mai înaltă cascadă din Moldova, peșteri și stânci impresionante deasupra Nistrului.</p>
+      </div>
+
+      <div class="dest-card fade-in" data-tooltip="120 km de tuneluri cu vin">
+        <div class="badge">Vin · Subteran · Unic</div>
+        <h3>🍷 Cricova</h3>
+        <p>120 km de tuneluri subterane cu colecții de milioane de sticle de vin. Vizite cu mașinuțe electrice.</p>
+      </div>
+
+      <div class="dest-card fade-in" data-tooltip="Cramă fondată în 1827">
+        <div class="badge">Podgorie · Tradiție · Agro-turism</div>
+        <h3>🌿 Purcari</h3>
+        <p>Cel mai vechi cram din Moldova (1827). Degustări de Negru de Purcari — vinul preferat al țarilor ruși.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <hr/>
+
+  <!-- ══ SFATURI ══ -->
+  <section id="sfaturi">
+    <h2>💡 Sfaturi practice</h2>
+    <ol class="sfaturi">
+      <li class="fade-in"><b>Cel mai bun moment:</b> Mai–octombrie pentru drumeții și podgorii. Septembrie–octombrie este sezonul culesului — festivaluri de vin în toată țara.</li>
+      <li class="fade-in"><b>Cum te deplasezi:</b> Rutierele (microbuze) acoperă toată țara ieftin. Taxiurile și Bolt sunt accesibile în orașe. Mașina închiriată e ideală pentru sate.</li>
+      <li class="fade-in"><b>Monedă &amp; plăți:</b> <span class="tooltip-trigger" data-tooltip="1 EUR ≈ 19 MDL (verifică cursul curent)">Leul moldovenesc (MDL)</span>. Cardurile sunt acceptate în orașe; la sate — cash.</li>
+      <li class="fade-in"><b>Limbă &amp; comunicare:</b> Româna e limba oficială. Rusa este larg vorbită. Tinerii vorbesc adesea engleză.</li>
+      <li class="fade-in"><b>Cazare:</b> Pensiuni agroturistice — experiența autentică. Chișinăul are hoteluri de toate categoriile. Rezervă din timp în sezon.</li>
+      <li class="fade-in"><b>Siguranță:</b> Moldova e una dintre cele mai <span class="tooltip-trigger" data-tooltip="Indicele criminalității printre cele mai scăzute din Europa de Est">sigure țări din regiune</span>. La mănăstiri — vestimentație decentă obligatorie.</li>
+    </ol>
+  </section>
+
+  <hr/>
+
+  <!-- ══ BUCĂTĂRIE ══ -->
+  <section id="bucatarie" class="fade-in">
+    <h2>🍽️ Bucătărie tradițională</h2>
+    <p>Bucătăria moldovenească este generoasă și profund legată de pământ — grâu, porumb, carne, lactate și legume de grădină.</p>
+    <table>
+      <thead>
+        <tr><th>Fel de mâncare</th><th>Descriere</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>🥣 Zeamă</td><td>Supa națională — ciorbă de pui cu tăiței, leuștean și smântână.</td></tr>
+        <tr><td>🌽 Mămăligă</td><td>Mâncarea sufletului. Mălai fiert gros, servit cu brânză de oi, smântână sau jumări.</td></tr>
+        <tr><td>🥗 Plăcinte</td><td>Foi fragede cu umplutură de brânză, cartofi, varză sau cireșe.</td></tr>
+        <tr><td>🍖 Friptură de miel</td><td>La Paști și nunți — mielul la cuptor cu usturoi și rozmarin.</td></tr>
+        <tr><td>🧅 Sarmale</td><td>Foi de viță sau varză murate, umplute cu carne și orez, gătite lent.</td></tr>
+        <tr><td>🍯 Cozonac &amp; Pască</td><td>Pâine dulce împletită și pască de Paști — parfumul casei moldovenești.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <hr/>
+
+  <!-- ══ VIN ══ -->
+  <section id="vin" class="fade-in">
+    <h2>🍷 Ruta vinului</h2>
+    <p>Moldova este în <b>top 10 producători de vin din Europa</b> per capita. Cu un climat continental blând și sol fertil, podgoriile produc soiuri internaționale și autohtone remarcabile.</p>
+    <div class="vin-cols">
+      <div>
+        <h3>Soiuri autohtone</h3>
+        <ul class="lista">
+          <li><span class="tooltip-trigger" data-tooltip="Cel mai popular soi roșu moldovenesc">Fetească Neagră</span></li>
+          <li>Fetească Albă</li>
+          <li>Rară Neagră</li>
+          <li>Viorica</li>
+          <li><span class="tooltip-trigger" data-tooltip="Vinul preferat al țarilor ruși">Negru de Purcari</span></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Crame de vizitat</h3>
+        <ul class="lista">
+          <li>🏛️ Cricova — tuneluri subterane celebre</li>
+          <li><span class="tooltip-trigger" data-tooltip="Înregistrată în Guinness World Records">🏛️ Mileștii Mici — cea mai mare pivniță din lume</span></li>
+          <li>🏛️ Purcari — cramă cu tradiție din 1827</li>
+          <li>🏛️ Château Vartely — arhitectură modernă</li>
+          <li>🏛️ Castel Mimi — ecoturism și design contemporan</li>
+          <li>🏛️ Asconi — în inima podgoriei Codru</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <hr/>
+
+  <!-- ══ INFORMAȚII ══ -->
+  <section id="contact" class="fade-in">
+    <h2>ℹ️ Informații utile</h2>
+    <table class="info-table">
+      <tbody>
+        <tr><td>Capitala</td><td>Chișinău</td></tr>
+        <tr><td>Moneda</td><td>Leul moldovenesc (MDL)</td></tr>
+        <tr><td>Limbile oficiale</td><td>Română</td></tr>
+        <tr><td>Fusul orar</td><td>EET (UTC+2) / EEST (UTC+3 vara)</td></tr>
+        <tr><td>Urgențe</td><td>112</td></tr>
+        <tr><td>Site oficial turism</td><td><a href="https://moldova.travel" target="_blank">moldova.travel</a></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <hr/>
+
+  <!-- ══ FORMULAR NEWSLETTER ══ -->
+  <section id="newsletter" class="fade-in">
+    <h2>📬 Abonează-te la Newsletter</h2>
+    <p>Primește recomandări de călătorie, festivaluri și oferte speciale direct în inbox-ul tău.</p>
+
+    <div id="formular">
+      <form id="newsletterForm" novalidate>
+        <div class="form-grid">
+
+          <div class="form-group">
+            <label for="fname">Prenume *</label>
+            <input type="text" id="fname" placeholder="ex: Ion" autocomplete="given-name"/>
+            <span class="error-msg" id="fname-err">Prenumele este obligatoriu (min. 2 caractere).</span>
+          </div>
+
+          <div class="form-group">
+            <label for="lname">Nume *</label>
+            <input type="text" id="lname" placeholder="ex: Popescu" autocomplete="family-name"/>
+            <span class="error-msg" id="lname-err">Numele este obligatoriu (min. 2 caractere).</span>
+          </div>
+
+          <div class="form-group full">
+            <label for="email">Email *</label>
+            <input type="email" id="email" placeholder="ex: ion@example.com" autocomplete="email"/>
+            <span class="error-msg" id="email-err">Introduceți o adresă de email validă.</span>
+          </div>
+
+          <div class="form-group">
+            <label for="phone">Telefon</label>
+            <input type="tel" id="phone" placeholder="ex: +373 69 000 000" autocomplete="tel"/>
+            <span class="error-msg" id="phone-err">Format invalid. Exemplu: +373 69 000 000</span>
+          </div>
+
+          <div class="form-group">
+            <label for="interes">Interes principal</label>
+            <select id="interes">
+              <option value="">— Selectează —</option>
+              <option value="natura">Natură și drumeții</option>
+              <option value="vin">Ruta vinului</option>
+              <option value="manastiri">Mănăstiri și spiritualitate</option>
+              <option value="gastronomie">Gastronomie</option>
+              <option value="cultura">Cultură și istorie</option>
+            </select>
+          </div>
+
+          <div class="form-group full">
+            <label for="mesaj">Mesaj (opțional)</label>
+            <textarea id="mesaj" placeholder="Spune-ne ce te interesează sau ce întrebări ai..."></textarea>
+          </div>
+
+          <div class="form-group full">
+            <button type="submit" class="btn-submit">✉️ Abonează-mă</button>
+          </div>
+
+        </div>
+      </form>
+
+      <div id="form-success">
+        ✅ <strong>Mulțumim, <span id="success-name"></span>!</strong> Te-ai abonat cu succes. Vei primi în curând primul nostru newsletter despre destinațiile din Moldova.
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  Mini-Ghid Turism Moldova · 2025 · Informațiile sunt orientative.
+</footer>
+
+<!-- ══ BACK TO TOP ══ -->
+<button id="back-to-top" title="Sus">&#8679;</button>
+
+<!-- ══════════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════════ -->
+<script>
+
+  /* ────────────────────────────────────────
+     1. SMOOTH SCROLL pentru linkurile din nav
+  ──────────────────────────────────────── */
+  document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+    anchor.addEventListener('click', function(e) {
+      var targetId = this.getAttribute('href');
+      var target = document.querySelector(targetId);
+      if (target) {
+        e.preventDefault();
+        var headerOffset = 20;
+        var elementPosition = target.getBoundingClientRect().top;
+        var offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+        window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+      }
+    });
+  });
+
+
+  /* ────────────────────────────────────────
+     2. FADE-IN la scroll (Intersection Observer)
+  ──────────────────────────────────────── */
+  var fadeElements = document.querySelectorAll('.fade-in');
+
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  fadeElements.forEach(function(el) {
+    observer.observe(el);
+  });
+
+
+  /* ────────────────────────────────────────
+     3. SLIDER / CAROUSEL
+  ──────────────────────────────────────── */
+  var sliderTrack = document.getElementById('sliderTrack');
+  var slides = sliderTrack.querySelectorAll('.slide');
+  var dotsContainer = document.getElementById('sliderDots');
+  var prevBtn = document.getElementById('prevBtn');
+  var nextBtn = document.getElementById('nextBtn');
+  var currentSlide = 0;
+  var autoSlideInterval;
+
+  // Creează dots
+  slides.forEach(function(_, i) {
+    var dot = document.createElement('button');
+    dot.className = 'dot' + (i === 0 ? ' active' : '');
+    dot.setAttribute('aria-label', 'Slide ' + (i + 1));
+    dot.addEventListener('click', function() { goToSlide(i); });
+    dotsContainer.appendChild(dot);
+  });
+
+  function updateDots() {
+    dotsContainer.querySelectorAll('.dot').forEach(function(d, i) {
+      d.classList.toggle('active', i === currentSlide);
+    });
+  }
+
+  function goToSlide(index) {
+    currentSlide = (index + slides.length) % slides.length;
+    sliderTrack.style.transform = 'translateX(-' + (currentSlide * 100) + '%)';
+    updateDots();
+  }
+
+  prevBtn.addEventListener('click', function() {
+    goToSlide(currentSlide - 1);
+    resetAutoSlide();
+  });
+
+  nextBtn.addEventListener('click', function() {
+    goToSlide(currentSlide + 1);
+    resetAutoSlide();
+  });
+
+  function startAutoSlide() {
+    autoSlideInterval = setInterval(function() {
+      goToSlide(currentSlide + 1);
+    }, 4000);
+  }
+
+  function resetAutoSlide() {
+    clearInterval(autoSlideInterval);
+    startAutoSlide();
+  }
+
+  startAutoSlide();
+
+  // Swipe pe mobile
+  var touchStartX = 0;
+  sliderTrack.addEventListener('touchstart', function(e) {
+    touchStartX = e.touches[0].clientX;
+  });
+  sliderTrack.addEventListener('touchend', function(e) {
+    var diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 40) {
+      goToSlide(diff > 0 ? currentSlide + 1 : currentSlide - 1);
+      resetAutoSlide();
+    }
+  });
+
+
+  /* ────────────────────────────────────────
+     4. TOOLTIP pe carduri (click → popup mic)
+  ──────────────────────────────────────── */
+  document.querySelectorAll('.dest-card').forEach(function(card) {
+    card.addEventListener('click', function() {
+      var title = card.querySelector('h3').textContent;
+      var desc = card.querySelector('p').textContent;
+      showPopup(title, desc);
+    });
+  });
+
+  function showPopup(title, desc) {
+    var existing = document.getElementById('card-popup');
+    if (existing) existing.remove();
+
+    var popup = document.createElement('div');
+    popup.id = 'card-popup';
+    popup.style.cssText = [
+      'position:fixed', 'bottom:2rem', 'left:50%',
+      'transform:translateX(-50%) translateY(20px)',
+      'background:var(--wine)', 'color:white',
+      'padding:1rem 1.5rem', 'border-radius:10px',
+      'box-shadow:0 8px 24px rgba(0,0,0,0.25)',
+      'z-index:1000', 'max-width:340px', 'width:90%',
+      'text-align:center', 'font-family:Lato,sans-serif',
+      'transition:transform 0.3s ease, opacity 0.3s ease',
+      'opacity:0'
+    ].join(';');
+    popup.innerHTML = '<strong style="font-family:Playfair Display,serif;font-size:1.1rem;">' + title + '</strong>'
+      + '<p style="margin:0.4rem 0 0;font-size:0.88rem;opacity:0.9;line-height:1.5;">' + desc + '</p>';
+
+    document.body.appendChild(popup);
+    requestAnimationFrame(function() {
+      popup.style.opacity = '1';
+      popup.style.transform = 'translateX(-50%) translateY(0)';
+    });
+
+    setTimeout(function() {
+      popup.style.opacity = '0';
+      popup.style.transform = 'translateX(-50%) translateY(20px)';
+      setTimeout(function() { popup.remove(); }, 300);
+    }, 3000);
+  }
+
+
+  /* ────────────────────────────────────────
+     5. BACK TO TOP buton
+  ──────────────────────────────────────── */
+  var backToTopBtn = document.getElementById('back-to-top');
+
+  window.addEventListener('scroll', function() {
+    if (window.pageYOffset > 400) {
+      backToTopBtn.classList.add('show');
+    } else {
+      backToTopBtn.classList.remove('show');
+    }
+  });
+
+  backToTopBtn.addEventListener('click', function() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+
+  /* ────────────────────────────────────────
+     6. VALIDARE FORMULAR cu JavaScript
+  ──────────────────────────────────────── */
+  var form = document.getElementById('newsletterForm');
+
+  function setError(fieldId, errId, show) {
+    var field = document.getElementById(fieldId);
+    var err = document.getElementById(errId);
+    if (show) {
+      field.classList.add('error');
+      err.classList.add('show');
+    } else {
+      field.classList.remove('error');
+      err.classList.remove('show');
+    }
+    return !show;
+  }
+
+  function validateEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
+
+  function validatePhone(phone) {
+    // Optional: dacă e completat, verifică formatul
+    if (!phone) return true;
+    return /^[\+\d\s\-\(\)]{7,20}$/.test(phone);
+  }
+
+  // Validare live (la blur)
+  document.getElementById('fname').addEventListener('blur', function() {
+    setError('fname', 'fname-err', this.value.trim().length < 2);
+  });
+  document.getElementById('lname').addEventListener('blur', function() {
+    setError('lname', 'lname-err', this.value.trim().length < 2);
+  });
+  document.getElementById('email').addEventListener('blur', function() {
+    setError('email', 'email-err', !validateEmail(this.value.trim()));
+  });
+  document.getElementById('phone').addEventListener('blur', function() {
+    setError('phone', 'phone-err', !validatePhone(this.value.trim()));
+  });
+
+  // Submit
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    var fname = document.getElementById('fname').value.trim();
+    var lname = document.getElementById('lname').value.trim();
+    var email = document.getElementById('email').value.trim();
+    var phone = document.getElementById('phone').value.trim();
+
+    var valid = true;
+    valid = setError('fname', 'fname-err', fname.length < 2) && valid;
+    valid = setError('lname', 'lname-err', lname.length < 2) && valid;
+    valid = setError('email', 'email-err', !validateEmail(email)) && valid;
+    valid = setError('phone', 'phone-err', !validatePhone(phone)) && valid;
+
+    if (!valid) return;
+
+    // Afișează mesajul de succes
+    form.style.display = 'none';
+    var successDiv = document.getElementById('form-success');
+    document.getElementById('success-name').textContent = fname + ' ' + lname;
+    successDiv.style.display = 'block';
+
+    // Scroll la success
+    successDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+
+
+  /* ────────────────────────────────────────
+     7. EFECT TIPĂRIT în header (typewriter)
+  ──────────────────────────────────────── */
+  var headerP = document.querySelector('header p');
+  var originalText = headerP.textContent;
+  headerP.textContent = '';
+  var charIndex = 0;
+
+  function typeWriter() {
+    if (charIndex < originalText.length) {
+      headerP.textContent += originalText.charAt(charIndex);
+      charIndex++;
+      setTimeout(typeWriter, 28);
+    }
+  }
+
+  // Pornește după 600ms
+  setTimeout(typeWriter, 600);
+
+</script>
+
+</body>
+</html>
