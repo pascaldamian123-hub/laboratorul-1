@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Turism Moldova – Mini-Ghid</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --wine: #7a1f2e;
+      --wine-light: #a33345;
+      --gold: #c9a84c;
+      --cream: #faf6ef;
+      --text: #2c2018;
+      --muted: #7a6a58;
+      --border: #e2d9cc;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      font-weight: 300;
+      background: var(--cream);
+      color: var(--text);
+      line-height: 1.75;
+    }
+
+    /* HEADER */
+    header {
+      background: var(--wine);
+      color: white;
+      text-align: center;
+      padding: 3.5rem 1.5rem 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      position: relative;
+    }
+
+    header p {
+      margin-top: 0.75rem;
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.8);
+      font-style: italic;
+      position: relative;
+    }
+
+    /* CONTAINER */
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 1.5rem 4rem;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2.5rem 0;
+    }
+
+    /* NAV / CUPRINS */
+    nav {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.5rem 2rem;
+      margin: 2.5rem 0;
+    }
+
+    nav h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1.5rem;
+    }
+
+    nav a {
+      color: var(--wine);
+      text-decoration: none;
+      font-weight: 400;
+      font-size: 0.95rem;
+      transition: color 0.2s;
+    }
+
+    nav a:hover { color: var(--gold); }
+
+    /* SECTIONS */
+    section { margin-bottom: 2rem; }
+
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      color: var(--wine);
+      margin: 2.5rem 0 1.25rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--gold);
+      display: inline-block;
+    }
+
+    h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      color: var(--text);
+      margin: 1.75rem 0 0.4rem;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--muted);
+      background: var(--border);
+      padding: 2px 8px;
+      border-radius: 20px;
+      margin-bottom: 0.5rem;
+    }
+
+    p { margin-bottom: 0.75rem; color: var(--text); }
+
+    /* DESTINAȚII GRID */
+    .dest-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1.25rem;
+      margin-top: 1.25rem;
+    }
+
+    .dest-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem 1.5rem;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+
+    .dest-card:hover {
+      box-shadow: 0 6px 20px rgba(122,31,46,0.12);
+      transform: translateY(-2px);
+    }
+
+    .dest-card h3 { margin-top: 0; font-size: 1.1rem; }
+    .dest-card p { font-size: 0.92rem; color: var(--muted); margin: 0; }
+
+    /* SFATURI */
+    ol.sfaturi {
+      list-style: none;
+      counter-reset: sfat;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    ol.sfaturi li {
+      counter-increment: sfat;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem 1.25rem 1rem 4rem;
+      position: relative;
+    }
+
+    ol.sfaturi li::before {
+      content: counter(sfat);
+      position: absolute;
+      left: 1.1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 2rem;
+      height: 2rem;
+      background: var(--wine);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+
+    ol.sfaturi li b { color: var(--wine); }
+
+    /* TABLE */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+      font-size: 0.95rem;
+    }
+
+    thead th {
+      background: var(--wine);
+      color: white;
+      padding: 0.75rem 1rem;
+      text-align: left;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    tbody tr:nth-child(odd) { background: white; }
+    tbody tr:nth-child(even) { background: #f5efe6; }
+
+    tbody td {
+      padding: 0.7rem 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* INFO TABLE */
+    .info-table td:first-child {
+      font-weight: 700;
+      color: var(--muted);
+      width: 160px;
+    }
+
+    /* VIN */
+    .vin-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    @media (max-width: 520px) {
+      .vin-cols { grid-template-columns: 1fr; }
+      .dest-grid { grid-template-columns: 1fr; }
+    }
+
+    ul.lista {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    ul.lista li {
+      padding: 0.45rem 0.75rem;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.93rem;
+    }
+
+    /* LINKS */
+    a { color: var(--wine); }
+    a:hover { color: var(--gold); }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>🇲🇩 Turism Moldova</h1>
+  <p>O țară mică cu suflet mare — peisaje line, mănăstiri vechi, vinuri de legendă și ospitalitate autentică.</p>
+</header>
+
+<div class="container">
+
+  <nav>
+    <h2>📋 Cuprins</h2>
+    <ul>
+      <li><a href="#destinatii">Destinații principale</a></li>
+      <li><a href="#sfaturi">Sfaturi practice</a></li>
+      <li><a href="#bucatarie">Bucătărie tradițională</a></li>
+      <li><a href="#vin">Ruta vinului</a></li>
+      <li><a href="#contact">Informații utile</a></li>
+    </ul>
+  </nav>
+
+  <!-- DESTINAȚII -->
+  <section id="destinatii">
+    <h2>📍 Destinații principale</h2>
+    <div class="dest-grid">
+
+      <div class="dest-card">
+        <div class="badge">Capitală · Cultură · Viață nocturnă</div>
+        <h3>🏛️ Chișinău</h3>
+        <p>Bulevardul Ștefan cel Mare, Arcul de Triumf, piețe pitorești și o scenă culinară vibrantă. Orașul verde cu alei de tei înfloriți vara.</p>
+      </div>
+
+      <div class="dest-card">
+        <div class="badge">Natură · Arheologie · Spirit</div>
+        <h3>⛰️ Orheiul Vechi</h3>
+        <p>Complex rupestru tăiat în calcar deasupra meandrelor râului Răut. Sat dacic, mănăstire medievală și priveliști spectaculoase.</p>
+      </div>
+
+      <div class="dest-card">
+        <div class="badge">Cascade · Mănăstire · Natură</div>
+        <h3>💧 Saharna</h3>
+        <p>22 de cascade într-un defileu verde, mănăstire pictată și icoana Maicii Domnului — loc de pelerinaj și contemplare.</p>
+      </div>
+
+      <div class="dest-card">
+        <div class="badge">Chei · Cascadă · Legendă</div>
+        <h3>🏞️ Țipova</h3>
+        <p>Cea mai înaltă cascadă din Moldova, peșteri și stânci de calcar impresionante deasupra Nistrului. Locul legendei lui Orfeu.</p>
+      </div>
+
+      <div class="dest-card">
+        <div class="badge">Vin · Subteran · Unic</div>
+        <h3>🍷 Cricova</h3>
+        <p>120 km de tuneluri subterane cu colecții de milioane de sticle de vin. Vizite cu mașinuțe electrice — o lume aparte sub pământ.</p>
+      </div>
+
+      <div class="dest-card">
+        <div class="badge">Podgorie · Tradiție · Agro-turism</div>
+        <h3>🌿 Purcari</h3>
+        <p>Cel mai vechi cram din Moldova (1827), pe malul Nistrului. Degustări de Negru de Purcari — vinul preferat al țarilor ruși.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <hr/>
+
+  <!-- SFATURI -->
+  <section id="sfaturi">
+    <h2>💡 Sfaturi practice</h2>
+    <ol class="sfaturi">
+      <li><b>Cel mai bun moment:</b> Mai–octombrie pentru drumeții și podgorii. Septembrie–octombrie este sezonul culesului — festivaluri de vin în toată țara.</li>
+      <li><b>Cum te deplasezi:</b> Rutierele (microbuze) acoperă toată țara ieftin. Taxiurile și Bolt sunt accesibile în orașe. Mașina închiriată e ideală pentru sate.</li>
+      <li><b>Monedă &amp; plăți:</b> Leul moldovenesc (MDL). Cardurile sunt acceptate în orașe; la sate — cash. ATM-uri disponibile în Chișinău peste tot.</li>
+      <li><b>Limbă &amp; comunicare:</b> Româna e limba oficială. Rusa este larg vorbită. Tinerii vorbesc adesea engleză. Un zâmbet și „mulțumesc" deschid orice ușă.</li>
+      <li><b>Cazare:</b> Pensiuni agroturistice — experiența autentică. Chișinăul are hoteluri de toate categoriile. Rezervă din timp în sezon.</li>
+      <li><b>Siguranță:</b> Moldova e una dintre cele mai sigure țări din regiune. La mănăstiri — vestimentație decentă obligatorie.</li>
+    </ol>
+  </section>
+
+  <hr/>
+
+  <!-- BUCĂTĂRIE -->
+  <section id="bucatarie">
+    <h2>🍽️ Bucătărie tradițională</h2>
+    <p>Bucătăria moldovenească este generoasă și profund legată de pământ — grâu, porumb, carne, lactate și legume de grădină.</p>
+    <table>
+      <thead>
+        <tr>
+          <th>Fel de mâncare</th>
+          <th>Descriere</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>🥣 Zeamă</td><td>Supa națională — ciorbă de pui cu tăiței, leuștean și smântână. Reconfortantă și aromată.</td></tr>
+        <tr><td>🌽 Mămăligă</td><td>Mâncarea sufletului. Mălai fiert gros, servit cu brânză de oi, smântână sau jumări.</td></tr>
+        <tr><td>🥗 Plăcinte</td><td>Foi fragede cu umplutură de brânză, cartofi, varză sau cireșe. Nelipsite la orice masă de sărbătoare.</td></tr>
+        <tr><td>🍖 Friptură de miel</td><td>La Paști și nunți — mielul la cuptor cu usturoi și rozmarin, piesa de rezistență a mesei moldovenești.</td></tr>
+        <tr><td>🧅 Sarmale</td><td>Foi de viță sau varză murate, umplute cu carne și orez, gătite lent. Rețetă transmisă din generație în generație.</td></tr>
+        <tr><td>🍯 Cozonac &amp; Pască</td><td>Pâine dulce împletită și pască de Paști cu brânză — parfumul casei moldovenești.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <hr/>
+
+  <!-- VIN -->
+  <section id="vin">
+    <h2>🍷 Ruta vinului</h2>
+    <p>Moldova este în <b>top 10 producători de vin din Europa</b> per capita. Cu un climat continental blând și sol fertil, podgoriile produc soiuri internaționale și autohtone remarcabile.</p>
+    <div class="vin-cols">
+      <div>
+        <h3>Soiuri autohtone</h3>
+        <ul class="lista">
+          <li>Fetească Neagră</li>
+          <li>Fetească Albă</li>
+          <li>Rară Neagră</li>
+          <li>Viorica</li>
+          <li>Negru de Purcari</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Crame de vizitat</h3>
+        <ul class="lista">
+          <li>🏛️ Cricova — tuneluri subterane celebre</li>
+          <li>🏛️ Mileștii Mici — cel mai mare pivniță din lume (Guinness)</li>
+          <li>🏛️ Purcari — cramă cu tradiție din 1827</li>
+          <li>🏛️ Château Vartely — arhitectură modernă și degustări</li>
+          <li>🏛️ Castel Mimi — ecoturism și design contemporan</li>
+          <li>🏛️ Asconi — în inima podgoriei Codru</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <hr/>
+
+  <!-- INFORMAȚII UTILE -->
+  <section id="contact">
+    <h2>ℹ️ Informații utile</h2>
+    <table class="info-table">
+      <tbody>
+        <tr><td>Capitala</td><td>Chișinău</td></tr>
+        <tr><td>Moneda</td><td>Leul moldovenesc (MDL)</td></tr>
+        <tr><td>Limbile oficiale</td><td>Română</td></tr>
+        <tr><td>Fusul orar</td><td>EET (UTC+2) / EEST (UTC+3 vara)</td></tr>
+        <tr><td>Urgențe</td><td>112</td></tr>
+        <tr><td>Site oficial turism</td><td><a href="https://moldova.travel" target="_blank">moldova.travel</a></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+</div>
+
+<footer>
+  Mini-Ghid Turism Moldova · 2025 · Informațiile sunt orientative.
+</footer>
+
+</body>
+</html>
